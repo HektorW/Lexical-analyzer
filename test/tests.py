@@ -1,7 +1,23 @@
 import imp, sys
 
-token_definitions = imp.load_source('token_definitions', '../token_definitions.py')
-lexer = imp.load_source('lexer', '../lexer.py').lexer
+# token_definitions = imp.load_source('token_definitions', '../token_definitions.py')
+Lexer = imp.load_source('Lexer', '../lexer.py').Lexer
+
+
+
+json_tokens_file = 'tokens.json'
+
+
+lex = Lexer(json_tokens_file)
+lex.readJson()
+lex.compile()
+
+
+lex.parse('1 2     3  "hello world"')
+
+
+
+
 
 def testFailed(str):
   print('Test failed, ' + str)
@@ -46,4 +62,6 @@ def testNumbers():
   print('# All Number tests passed')
 
 
-testNumbers()
+# Run tests
+
+# testNumbers()
