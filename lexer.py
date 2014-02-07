@@ -1,5 +1,11 @@
 import re, sys
 
+try:  # do not edit! added by PythonBreakpoints
+    from ipdb import set_trace as _breakpoint
+except ImportError:
+    from pdb import set_trace as _breakpoint
+
+
 # combine all token regex into one regex
 # using (rgx1)|(rgx2)
 # 
@@ -14,6 +20,12 @@ import re, sys
 # if something isn't matched we have an unmatched token?
 #   how to check?
 #   last matched last index is not equal this match first index?
+
+
+# some changes to be done
+# instead of adding tokens one by one
+#   submit entire file or some collection of tokens
+#   compile all when submitted
 
 class lexer:
   def __init__(self):
