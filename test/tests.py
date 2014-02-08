@@ -31,9 +31,6 @@ def notequals(result, expected):
     testFailed('{} should not equal {}'.format(result, expected))
 
 def testNumbers():
-  # lex = Lexer();
-  # lex.addToken('NUMBER', token_definitions.NUMBER)
-
   # test type
   equals(lex.getTokenType('1'), 'NUMBER')
   notequals(lex.getTokenType('a'), 'NUMBER')
@@ -55,10 +52,17 @@ def testNumbers():
   equals(lex.getTokenValue('12345.0123'), '12345.0123')
   equals(lex.getTokenValue('12345.0123'), '12345.0123')
 
+  print('# Number tests passed')
 
-  print('# All Number tests passed')
+def testStrings():
+  equals(lex.getTokenType('"hello"'), 'STRING')
+  equals(lex.getTokenType('"hello there walla"'), 'STRING')
+  equals(lex.getTokenType('"1"'), 'STRING')
+  notequals(lex.getTokenType('"1"'), 'NUMBER')
 
+  print('# String tests passed')
 
 # Run tests
 
 testNumbers()
+testStrings()
