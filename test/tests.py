@@ -13,9 +13,6 @@ lex.readJson()
 lex.compile()
 
 
-lex.parse('1 2     3  "hello world"')
-
-
 
 
 
@@ -34,8 +31,8 @@ def notequals(result, expected):
     testFailed('{} should not equal {}'.format(result, expected))
 
 def testNumbers():
-  lex = lexer();
-  lex.addToken('NUMBER', token_definitions.NUMBER)
+  # lex = Lexer();
+  # lex.addToken('NUMBER', token_definitions.NUMBER)
 
   # test type
   equals(lex.getTokenType('1'), 'NUMBER')
@@ -45,18 +42,18 @@ def testNumbers():
   equals(lex.getTokenType('1.0'), 'NUMBER')
   equals(lex.getTokenType('1.'), 'NUMBER')
   equals(lex.getTokenType('.1'), 'NUMBER')
-  equals(lex.getTokenType('       1.1      '), 'NUMBER')
+  equals(lex.getTokenType('1.1'), 'NUMBER')
   notequals(lex.getTokenType('NUMBER'), 'NUMBER')
   # notequals(lex.getTokenType('1.1.'), 'NUMBER')
   # notequals(lex.getTokenType('1.1.1'), 'NUMBER')
 
   # test value
-  equals(lex.getTokenValue('1', 'NUMBER'), '1')
-  equals(lex.getTokenValue('1.0', 'NUMBER'), '1.0')
-  equals(lex.getTokenValue('1.', 'NUMBER'), '1.')
-  equals(lex.getTokenValue('.1', 'NUMBER'), '.1')
-  equals(lex.getTokenValue('12345.0123', 'NUMBER'), '12345.0123')
-  equals(lex.getTokenValue('12345.0123', 'NUMBER'), '12345.0123')
+  equals(lex.getTokenValue('1'), '1')
+  equals(lex.getTokenValue('1.0'), '1.0')
+  equals(lex.getTokenValue('1.'), '1.')
+  equals(lex.getTokenValue('.1'), '.1')
+  equals(lex.getTokenValue('12345.0123'), '12345.0123')
+  equals(lex.getTokenValue('12345.0123'), '12345.0123')
 
 
   print('# All Number tests passed')
@@ -64,4 +61,4 @@ def testNumbers():
 
 # Run tests
 
-# testNumbers()
+testNumbers()

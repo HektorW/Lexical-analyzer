@@ -53,14 +53,22 @@ class Lexer:
     # remove last |
     rgx_str = rgx_str[:-1]
     self.rgx_str = rgx_str
-    print(rgx_str)
     self.regex = re.compile(rgx_str)
 
   def parse(self, text):
     for match in self.regex.finditer(text):
-      print('"' + match.lastgroup + '": ' + match.group() + '')
+      pass
+      # print('"' + match.lastgroup + '": ' + match.group() + '')
 
 
+
+  def getTokenType(self, text):
+    match = self.regex.match(text) 
+    return match.lastgroup if match is not None else None
+
+  def getTokenValue(self, text):
+    match = self.regex.match(text)
+    return match.group(0) if match is not None else None
 
 # class lexer:
 #   def __init__(self):
