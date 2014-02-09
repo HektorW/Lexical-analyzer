@@ -56,9 +56,28 @@ class Lexer:
     self.regex = re.compile(rgx_str)
 
   def parse(self, text):
+    result = []
+    last_end = 0
     for match in self.regex.finditer(text):
-      pass
-      # print('"' + match.lastgroup + '": ' + match.group() + '')
+      # debug assertion, there should only be one match
+      assert(len([x for x in list(match.groups()) if x is not None]) == 1)
+
+      # if this start is not equal to last end we have missed some characters
+      start = match.start()
+      if start != last_end:
+        raise Exception("characters in text wasn't matched against any token between character numbers {} - {}".format(last_end, start))
+
+      last_end = match.end()
+
+      # get the needed properties
+      result.append({
+        "name": match.lastgroup,
+        "value": match.group(0),
+        "start": start,
+        "end": match.end()
+      })
+
+    return result
 
 
 
