@@ -1,4 +1,4 @@
-import imp, sys
+import imp, sys, traceback
 
 # token_definitions = imp.load_source('token_definitions', '../token_definitions.py')
 Lexer = imp.load_source('Lexer', '../lexer.py').Lexer
@@ -18,6 +18,7 @@ lex.compile()
 # Testing framework, to be exchanged with something more robust
 def testFailed(str):
   print('Test failed, ' + str)
+  print(traceback.extract_stack())
   sys.exit()
 
 def equals(result, expected):
@@ -83,16 +84,35 @@ def testName():
   equals(lex.getTokenType('foo'), 'NAME')
   equals(lex.getTokenType('foo_'), 'NAME')
   equals(lex.getTokenType('foo_1'), 'NAME')
+  equals(lex.getTokenType('BAR'), 'NAME')
+  equals(lex.getTokenType('Baz23BaB_$'), 'NAME')
   equals(lex.getTokenType('$'), 'NAME')
   equals(lex.getTokenType('_'), 'NAME')
   equals(lex.getTokenType('_$__$_asdafa99123_'), 'NAME')
 
-  notequals(lex.getTokenType('_foo_1'), 'NAME') # should throw a error
-
   print('# Name tests passed')
 
+
+def testComments():
+  equals(lex.getTokenType('// comment'), 'COMMENT')
+  equals(lex.getTokenType('//'), 'COMMENT')
+  equals(lex.getTokenType('// "asdasdasfawesa asd" 123 09='), 'COMMENT')
+
+  equals(lex.getTokenType('/* */'), 'COMMENT')
+  equals(lex.getTokenType('/*  asdasf asf */'), 'COMMENT')
+
+  print('# Comment tests passed')
+
+# Parse
+def testParse():
+  lex.parse('1+1=2')
+  lex.parse('1 + 1 = 2')
+
+  print('# Parse tests passed')
 
 # Run tests
 testNumbers()
 testStrings()
 testName()
+testComments()
+testParse()
